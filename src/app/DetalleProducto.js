@@ -1,15 +1,16 @@
 import productosBD from './baseDatosProductos'
-import AgregarCarrito  from './AgregarCarrito'
+import AgregarCarrito from './AgregarCarrito'
 
 function DetalleProducto(Id) {
     let Carrito = []
     if (localStorage.getItem('carrito')) {
         Carrito = JSON.parse(localStorage.getItem('carrito'))
+        console.log(Carrito)
     }
-
+    
     let productoId = productosBD[Id]
-let datalleProducto = document.querySelector('main')
-datalleProducto.innerHTML = `
+    let datalleProducto = document.querySelector('main')
+    datalleProducto.innerHTML = `
 <main class="mb-5">
 <div class="agregarFavorito"></div>
 <div class="row mt-5">
@@ -21,17 +22,17 @@ datalleProducto.innerHTML = `
         </div>
         <div class="row">
             <div class="col mt-3">
-                <a href="#"><img class="img_detalle_producto" src=${productoId.imagenes[1] ? productoId.imagenes[1]:'' }></a>
+                <a href="#"><img class="img_detalle_producto" src=${productoId.imagenes[1] ? productoId.imagenes[1] : ''}></a>
             </div>
         </div>
         <div class="row">
             <div class="col mt-3">
-                <a href="#"><img class="img_detalle_producto" src=${productoId.imagenes[2] ? productoId.imagenes[2] :''}></a>
+                <a href="#"><img class="img_detalle_producto" src=${productoId.imagenes[2] ? productoId.imagenes[2] : ''}></a>
             </div>
         </div>
         <div class="row">
             <div class="col mt-3">
-                <a href="#"><img class="img_detalle_producto" src=${productoId.imagenes[3] ? productoId.imagenes[3]: ''}></a>
+                <a href="#"><img class="img_detalle_producto" src=${productoId.imagenes[3] ? productoId.imagenes[3] : ''}></a>
             </div>
         </div>
     </div>
@@ -153,48 +154,49 @@ datalleProducto.innerHTML = `
     </div>
 </div>
 </footer>
-` 
-let abrir = document.querySelector('#agregarCarrito')
-abrir.addEventListener('click',() => {
-     /**Preguntar si el elemnto esta en el carrito  */
-     productoId.cantidad = 1
-     let casa = Carrito.filter( (item)=> item.id == productoId.id)
-     if(casa.length > 0 ){
-         console.log("ya lo tienes");
-     }else{
-        console.log("Agregado");
-        Carrito.push(productoId)
-        localStorage.setItem('carrito', JSON.stringify(Carrito))
-     }   
-        AgregarCarrito(productoId.id)  
-       document.getElementById("sideNavigation").style.width = "470px";
+`
+    let abrir = document.querySelector('#agregarCarrito')
+    abrir.addEventListener('click', () => {
+        /**Preguntar si el elemnto esta en el carrito  */
+        productoId.cantidad = 1
+        let casa = Carrito.filter((item) => item.id == productoId.id)
+        if (casa.length > 0) {
+            console.log("ya lo tienes");
+        } else {
+            console.log("Agregado");
+            Carrito.push(productoId)
+            localStorage.setItem('carrito', JSON.stringify(Carrito))
+        }
+        console.log(Carrito)
+        AgregarCarrito(productoId.id)
+        document.getElementById("sideNavigation").style.width = "470px";
 
-})
+    })
 
-const buttonPrev = document.getElementById('button-prev');
-const buttonNext = document.getElementById('button-next');
-const track = document.getElementById('track');
-const slickList = document.getElementById('slick-list');
-const slick = document.querySelectorAll('.slick');
-
-
-const slickWidth = slick[0].offsetWidth;
+    const buttonPrev = document.getElementById('button-prev');
+    const buttonNext = document.getElementById('button-next');
+    const track = document.getElementById('track');
+    const slickList = document.getElementById('slick-list');
+    const slick = document.querySelectorAll('.slick');
 
 
-buttonPrev.onclick = () => move(1);
-buttonNext.onclick = () => move(2);
+    const slickWidth = slick[0].offsetWidth;
 
-function move(value) {
-    const trackWidth = track.offsetWidth;
-    const listWidth = slickList.offsetWidth;
 
-    track.style.left == "" ? leftPosition = track.style.left = 0 : leftPosition = parseFloat(track.style.left.slice(0, -2) * - 1);
-    if(leftPosition < (trackWidth - listWidth) && value == 2){
-        track.style.left = `${-1 * (leftPosition + slickWidth)}px`;
-    } else if(leftPosition > 0 && value == 1){
-        track.style.left = `${-1 * (leftPosition - slickWidth)}px`;
+    buttonPrev.onclick = () => move(1);
+    buttonNext.onclick = () => move(2);
+
+    function move(value) {
+        const trackWidth = track.offsetWidth;
+        const listWidth = slickList.offsetWidth;
+
+        track.style.left == "" ? leftPosition = track.style.left = 0 : leftPosition = parseFloat(track.style.left.slice(0, -2) * - 1);
+        if (leftPosition < (trackWidth - listWidth) && value == 2) {
+            track.style.left = `${-1 * (leftPosition + slickWidth)}px`;
+        } else if (leftPosition > 0 && value == 1) {
+            track.style.left = `${-1 * (leftPosition - slickWidth)}px`;
+        }
     }
-}
- 
+
 }
 export default DetalleProducto

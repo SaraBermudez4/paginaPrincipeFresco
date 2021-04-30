@@ -1,17 +1,25 @@
 import Registro from "./Registro";
+
 /* let llenarDatos = {nombre:"pepe"}  */
 let Usuer = []
 if (localStorage.getItem('Usuario')) {
     Usuer = JSON.parse(localStorage.getItem('Usuario'))
-} 
+}
+
+let carrito = []
+if (localStorage.getItem('carrito')) {
+    carrito = JSON.parse(localStorage.getItem('carrito'))
+}
+let prod = carrito[0]
+
 let persona = Usuer[0]
 console.log(persona, "4 am");
 
 function Checkout() {
 
-    document.querySelector('main').innerHTML =    
+    document.querySelector('main').innerHTML =
 
-`
+        `
 <main class="content px-2">
 <form class="row g-3" id=formChekout>
     <div class="row px-5 pt-5 mb-5">
@@ -116,7 +124,7 @@ function Checkout() {
         <div class="col-md-4 mt-4 o">
             <p class="order">Order review</p>
             <div class="row g-3">
-                <table class="table">
+                <table class="table" id="producto_checkout">
                     <thead class="tbl_title">
                         <tr>
                             <th scope="col">Producto Name</th>
@@ -127,17 +135,11 @@ function Checkout() {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Camiseta</td>
-                            <td>50000</td>
-                            <td>1</td>
-                            <td>50000</td>
+                            
                         </tr>
                     </tbody>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col">Grand Total</th>
-                        <th scope="col">50000</th>
+                    <tr id="total">
+                        
                     </tr>
                 </table>
                 <div class="col-12">
@@ -172,40 +174,54 @@ function Checkout() {
 </div>
 </footer>
 `
-/* 
- let a = persona.filter((item)  => item == active) */
+    /* 
+     let a = persona.filter((item)  => item == active) */
+
+    document.querySelector("#producto_checkout tbody").innerHTML += `
+     <tr>
+         <td>${prod.nombre}</td>
+         <td>${prod.precio}</td>
+         <td>${prod.cantidad}</td>
+         <td>${prod.precio * prod.cantidad}</td>
+     </tr>`
+
+    document.querySelector("#producto_checkout #total").innerHTML += `
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col">Grand Total</th>
+        <th scope="col">${prod.precio * prod.cantidad}</th>`
 
 
- if (false) {
-   
-    document.querySelector("#usuarioRegistro").value = persona.user
+    if (false) {
 
-    document.querySelector("#contrasenaRegistro").value = persona.pass
+        document.querySelector("#usuarioRegistro").value = persona.user
 
-    document.querySelector("#nombreRegistro").value = persona.name
+        document.querySelector("#contrasenaRegistro").value = persona.pass
 
-    document.querySelector("#apellidoRegistro").value = persona.lastName
+        document.querySelector("#nombreRegistro").value = persona.name
 
-    document.querySelector("#correoRegistro").value = persona.email
+        document.querySelector("#apellidoRegistro").value = persona.lastName
 
-    document.querySelector("#direccionRegistro").value = persona.dir
+        document.querySelector("#correoRegistro").value = persona.email
 
-    document.querySelector("#ciudadRegistro").value = persona.ciud
+        document.querySelector("#direccionRegistro").value = persona.dir
 
-    document.querySelector("#departamentoRegistro").value = persona.dep
+        document.querySelector("#ciudadRegistro").value = persona.ciud
 
-    document.querySelector("#codigoPostalRegistro").value = persona.cpost
+        document.querySelector("#departamentoRegistro").value = persona.dep
 
-    document.querySelector("#paisRegistro").value = persona.pais
+        document.querySelector("#codigoPostalRegistro").value = persona.cpost
 
-    document.querySelector("#celularRegistro").value = persona.celu
+        document.querySelector("#paisRegistro").value = persona.pais
 
-    document.querySelector("#cedulaRegistro").value = persona.cedu
-} 
-let estado = persona? true: false
-estado ?document.querySelector('#inlineRadio2').checked =false : 
-document.querySelector('#inlineRadio2').checked =true
-Registro()
+        document.querySelector("#celularRegistro").value = persona.celu
+
+        document.querySelector("#cedulaRegistro").value = persona.cedu
+    }
+    let estado = persona ? true : false
+    estado ? document.querySelector('#inlineRadio2').checked = false :
+        document.querySelector('#inlineRadio2').checked = true
+    Registro()
 
 
 }
